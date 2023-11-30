@@ -1,0 +1,18 @@
+/* 前台用户图书类型样式 */
+#myTab a{
+	color: #02010a;
+}
+
+#myTab a:hover{
+	color:white;
+	background-color: #ff6f61
+}
+
+#myTab a.active{
+	color:white;
+	background-color: #ff6f61
+}
+
+/* 前台用户评分分析样式 */
+
+

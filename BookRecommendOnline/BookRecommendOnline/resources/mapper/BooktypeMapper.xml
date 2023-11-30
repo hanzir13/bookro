@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.bookrecommendonline.mapper.BooktypeMapper">
+  <resultMap id="BaseResultMap" type="com.bookrecommendonline.entity.BooktypeEntity">
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="typename" jdbcType="VARCHAR" property="typename" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    id, typename
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from db_booktype
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from db_booktype
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.bookrecommendonline.entity.BooktypeEntity">
+    insert into db_booktype (id, typename)
+    values (#{id,jdbcType=INTEGER}, #{typename,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.bookrecommendonline.entity.BooktypeEntity">
+    insert into db_booktype
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="typename != null">
+        typename,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="typename != null">
+        #{typename,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.bookrecommendonline.entity.BooktypeEntity">
+    update db_booktype
+    <set>
+      <if test="typename != null">
+        typename = #{typename,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.bookrecommendonline.entity.BooktypeEntity">
+    update db_booktype
+    set typename = #{typename,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  
+  <!--   带参数查询 -->
+  <select id="find" resultMap="BaseResultMap" >
+    select 
+    	<include refid="Base_Column_List" />
+    from db_booktype
+    where 1=1 
+	    <include refid="com.bookrecommendonline.mapper.BaseMapper.Base_Param_List" />
+    order by id desc
+  </select>
+  
+  <!--   带参数查询一个 -->
+  <select id="findFirst" resultMap="BaseResultMap" >
+    select 
+    	<include refid="Base_Column_List" />
+    from db_booktype
+    where 1=1 
+    	<include refid="com.bookrecommendonline.mapper.BaseMapper.Base_Param_List" />
+    order by id desc 
+    limit 0,1
+  </select>
+  
+  <!--   带参数聚合查询 -->
+  <select id="findCount" resultType="java.lang.Long">
+    select count(id) from db_booktype
+    where 1=1 
+    	<include refid="com.bookrecommendonline.mapper.BaseMapper.Base_Param_List" />
+  </select>
+  
+  <!--   排行榜，查询浏览数量较多的图书类型 -->
+  <select id="findTopByBooklook" resultMap="BaseResultMap" >
+    select count(m.booktypeid),t.* from db_booklook l 
+	left join db_book m on m.id = l.bookid
+	left join db_booktype t on t.id = m.booktypeid
+	group by m.booktypeid order by count(m.booktypeid) desc
+	limit 0,4
+  </select>
+  
+</mapper>

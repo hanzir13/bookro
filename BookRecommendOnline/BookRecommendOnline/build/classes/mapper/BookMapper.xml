@@ -1,0 +1,312 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.bookrecommendonline.mapper.BookMapper">
+  <resultMap id="BaseResultMap" type="com.bookrecommendonline.entity.BookEntity">
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="bookname" jdbcType="VARCHAR" property="bookname" />
+    <result column="booktypeid" jdbcType="INTEGER" property="booktypeid" />
+    <result column="image" jdbcType="VARCHAR" property="image" />
+    <result column="author" jdbcType="VARCHAR" property="author" />
+    <result column="press" jdbcType="VARCHAR" property="press" />
+    <result column="price" jdbcType="VARCHAR" property="price" />
+    <result column="isbn" jdbcType="VARCHAR" property="isbn" />
+    <result column="doubanid" jdbcType="VARCHAR" property="doubanid" />
+    <result column="createtime" jdbcType="VARCHAR" property="createtime" />
+    <result column="countlook" jdbcType="INTEGER" property="countlook" />
+  </resultMap>
+  <resultMap extends="BaseResultMap" id="ResultMapWithBLOBs" type="com.bookrecommendonline.entity.BookEntity">
+    <result column="content" jdbcType="LONGVARCHAR" property="content" />
+  </resultMap>
+  
+  <!--   关联结果集合 -->
+  <resultMap extends="ResultMapWithBLOBs" id="BaseResultMapJoin" type="com.bookrecommendonline.entity.BookEntity">
+    <!-- 	关联图书类型 -->
+	<association property="booktypeEntity" javaType="com.bookrecommendonline.entity.BooktypeEntity">
+		<id column="t_id" jdbcType="INTEGER" property="id" />
+    	<result column="t_typename" jdbcType="VARCHAR" property="typename" />
+	</association>
+  </resultMap>
+  
+  <!--   关联查询结果 -->
+  <sql id="Base_Column_List_Join">
+    m.*,
+    t.id as t_id, t.typename as t_typename 
+  </sql>
+  
+  <sql id="Base_Column_List">
+    id, bookname, booktypeid, image, author, press, price, isbn, doubanid, createtime
+  </sql>
+  <sql id="Blob_Column_List">
+    content
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="ResultMapWithBLOBs">
+    select 
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from db_book
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from db_book
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.bookrecommendonline.entity.BookEntity">
+    insert into db_book (id, bookname, booktypeid, 
+      image, author, press, 
+      price, isbn, doubanid, 
+      createtime, content)
+    values (#{id,jdbcType=INTEGER}, #{bookname,jdbcType=VARCHAR}, #{booktypeid,jdbcType=INTEGER}, 
+      #{image,jdbcType=VARCHAR}, #{author,jdbcType=VARCHAR}, #{press,jdbcType=VARCHAR}, 
+      #{price,jdbcType=VARCHAR}, #{isbn,jdbcType=VARCHAR}, #{doubanid,jdbcType=VARCHAR}, 
+      #{createtime,jdbcType=VARCHAR}, #{content,jdbcType=LONGVARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.bookrecommendonline.entity.BookEntity">
+    insert into db_book
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="bookname != null">
+        bookname,
+      </if>
+      <if test="booktypeid != null">
+        booktypeid,
+      </if>
+      <if test="image != null">
+        image,
+      </if>
+      <if test="author != null">
+        author,
+      </if>
+      <if test="press != null">
+        press,
+      </if>
+      <if test="price != null">
+        price,
+      </if>
+      <if test="isbn != null">
+        isbn,
+      </if>
+      <if test="doubanid != null">
+        doubanid,
+      </if>
+      <if test="createtime != null">
+        createtime,
+      </if>
+      <if test="content != null">
+        content,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="bookname != null">
+        #{bookname,jdbcType=VARCHAR},
+      </if>
+      <if test="booktypeid != null">
+        #{booktypeid,jdbcType=INTEGER},
+      </if>
+      <if test="image != null">
+        #{image,jdbcType=VARCHAR},
+      </if>
+      <if test="author != null">
+        #{author,jdbcType=VARCHAR},
+      </if>
+      <if test="press != null">
+        #{press,jdbcType=VARCHAR},
+      </if>
+      <if test="price != null">
+        #{price,jdbcType=VARCHAR},
+      </if>
+      <if test="isbn != null">
+        #{isbn,jdbcType=VARCHAR},
+      </if>
+      <if test="doubanid != null">
+        #{doubanid,jdbcType=VARCHAR},
+      </if>
+      <if test="createtime != null">
+        #{createtime,jdbcType=VARCHAR},
+      </if>
+      <if test="content != null">
+        #{content,jdbcType=LONGVARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.bookrecommendonline.entity.BookEntity">
+    update db_book
+    <set>
+      <if test="bookname != null">
+        bookname = #{bookname,jdbcType=VARCHAR},
+      </if>
+      <if test="booktypeid != null">
+        booktypeid = #{booktypeid,jdbcType=INTEGER},
+      </if>
+      <if test="image != null">
+        image = #{image,jdbcType=VARCHAR},
+      </if>
+      <if test="author != null">
+        author = #{author,jdbcType=VARCHAR},
+      </if>
+      <if test="press != null">
+        press = #{press,jdbcType=VARCHAR},
+      </if>
+      <if test="price != null">
+        price = #{price,jdbcType=VARCHAR},
+      </if>
+      <if test="isbn != null">
+        isbn = #{isbn,jdbcType=VARCHAR},
+      </if>
+      <if test="doubanid != null">
+        doubanid = #{doubanid,jdbcType=VARCHAR},
+      </if>
+      <if test="createtime != null">
+        createtime = #{createtime,jdbcType=VARCHAR},
+      </if>
+      <if test="content != null">
+        content = #{content,jdbcType=LONGVARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKeyWithBLOBs" parameterType="com.bookrecommendonline.entity.BookEntity">
+    update db_book
+    set bookname = #{bookname,jdbcType=VARCHAR},
+      booktypeid = #{booktypeid,jdbcType=INTEGER},
+      image = #{image,jdbcType=VARCHAR},
+      author = #{author,jdbcType=VARCHAR},
+      press = #{press,jdbcType=VARCHAR},
+      price = #{price,jdbcType=VARCHAR},
+      isbn = #{isbn,jdbcType=VARCHAR},
+      doubanid = #{doubanid,jdbcType=VARCHAR},
+      createtime = #{createtime,jdbcType=VARCHAR},
+      content = #{content,jdbcType=LONGVARCHAR}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.bookrecommendonline.entity.BookEntity">
+    update db_book
+    set bookname = #{bookname,jdbcType=VARCHAR},
+      booktypeid = #{booktypeid,jdbcType=INTEGER},
+      image = #{image,jdbcType=VARCHAR},
+      author = #{author,jdbcType=VARCHAR},
+      press = #{press,jdbcType=VARCHAR},
+      price = #{price,jdbcType=VARCHAR},
+      isbn = #{isbn,jdbcType=VARCHAR},
+      doubanid = #{doubanid,jdbcType=VARCHAR},
+      createtime = #{createtime,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  
+  <!--   带参数查询 -->
+  <select id="find" resultMap="BaseResultMap" >
+    select 
+    	<include refid="Base_Column_List" />
+    from db_book
+    where 1=1 
+	    <include refid="com.bookrecommendonline.mapper.BaseMapper.Base_Param_List" />
+    order by id desc
+  </select>
+  
+<!--   带参数关联查询 -->
+  <select id="findJoin" resultMap="BaseResultMapJoin" >
+    select 
+    	<include refid="Base_Column_List_Join" /> 
+    from db_book m
+    left join db_booktype t on t.id = m.booktypeid  
+    where 1=1 
+    	<include refid="com.bookrecommendonline.mapper.BaseMapper.Base_Param_List" />
+    order by m.id desc
+  </select>
+  
+<!--   带参数查询一个 -->
+  <select id="findFirst" resultMap="BaseResultMap" >
+    select 
+    	<include refid="Base_Column_List" />
+    from db_book
+    where 1=1 
+    	<include refid="com.bookrecommendonline.mapper.BaseMapper.Base_Param_List" />
+    order by id desc 
+    limit 0,1
+  </select>
+  
+  <!--   带参数关联查询一个 -->
+  <select id="findFirstJoin" resultMap="BaseResultMapJoin" >
+    select 
+    	<include refid="Base_Column_List_Join" /> 
+    from db_book m
+    left join db_booktype t on t.id = m.booktypeid  
+    where 1=1 
+    	<include refid="com.bookrecommendonline.mapper.BaseMapper.Base_Param_List" />
+    order by m.id desc 
+    limit 0,1
+  </select>
+  
+  <!--   带参数聚合查询 -->
+  <select id="findCount" resultType="java.lang.Long">
+    select count(id) from db_book
+    where 1=1 
+    	<include refid="com.bookrecommendonline.mapper.BaseMapper.Base_Param_List" />
+  </select>
+  
+  <!--   相关推荐，根据总评分降序查找同类型下图书，同时不包括当前登录用户评分过的图书 -->
+  <select id="findRelateByUserid" parameterType="java.lang.Integer" resultMap="BaseResultMap" >
+	SELECT m.*, sum(s.score) AS sumscore 
+		FROM db_book m LEFT JOIN db_bookscore s ON m.id = s.bookid 
+		WHERE
+			m.id != #{param1}
+			and m.booktypeid = #{param2}
+			<if test="param3!=null">
+			 	and m.id NOT IN 
+				( SELECT bookid FROM db_bookscore WHERE userid = #{param3,jdbcType=INTEGER} ) 
+			</if>
+		GROUP BY m.id 
+		ORDER BY sum(s.score) DESC 
+		LIMIT 0,6
+  </select>
+  
+  <!--   查找热点图书，根据登录用户喜好标签下的图书的总评分降序输出，同时不包括当前登录用户评分过的图书 -->
+  <select id="findHotByBookscore" parameterType="java.lang.Integer" resultMap="BaseResultMapJoin" >
+    SELECT <include refid="Base_Column_List_Join" /> , sum(s.score) AS sumscore 
+	FROM db_book m LEFT JOIN db_bookscore s ON m.id = s.bookid 
+	left join db_booktype t on t.id = m.booktypeid  
+	<if test="_parameter!=null">
+		WHERE m.id NOT IN 
+			( SELECT bookid FROM db_bookscore WHERE userid = #{userid,jdbcType=INTEGER} )
+			and m.booktypeid in ( select booktypeid from db_userlabel where userid = #{userid,jdbcType=INTEGER} )  
+	</if>
+	GROUP BY m.id 
+	ORDER BY sum(s.score) DESC 
+	LIMIT 0,6
+  </select>
+  
+  <!--   查找热点图书，根据登录用户喜好标签下的图书的收藏数量降序输出，同时不包括当前登录用户收藏过的图书 -->
+  <select id="findHotByBookcollect" parameterType="java.lang.Integer" resultMap="BaseResultMapJoin" >
+    SELECT <include refid="Base_Column_List_Join" /> , count(c.id) AS countcollect 
+	FROM db_book m LEFT JOIN db_bookcollect c ON m.id = c.bookid 
+	left join db_booktype t on t.id = m.booktypeid  
+	<if test="_parameter!=null">
+		WHERE m.id NOT IN 
+			( SELECT bookid FROM db_bookcollect WHERE userid = #{userid,jdbcType=INTEGER} ) 
+			and m.booktypeid in ( select booktypeid from db_userlabel where userid = #{userid,jdbcType=INTEGER} ) 
+	</if>
+	GROUP BY m.id 
+	ORDER BY count(c.id) DESC 
+	LIMIT 0,6
+  </select>
+  
+  <!--   热点榜单，查询浏览数量最多的图书，同时不包括当前登录用户浏览过的图书 -->
+  <select id="findTopByBooklook" parameterType="java.lang.Integer" resultMap="BaseResultMapJoin" >
+    SELECT <include refid="Base_Column_List_Join" /> , count(l.id) AS countlook 
+	FROM db_book m LEFT JOIN db_booklook l ON m.id = l.bookid 
+	left join db_booktype t on t.id = m.booktypeid  
+	<if test="_parameter!=null">
+		WHERE m.id NOT IN 
+			( SELECT bookid FROM db_booklook WHERE userid = #{userid,jdbcType=INTEGER} ) 
+	</if>
+	GROUP BY m.id 
+	ORDER BY count(l.id) DESC 
+	LIMIT 0,9
+  </select>
+  
+</mapper>

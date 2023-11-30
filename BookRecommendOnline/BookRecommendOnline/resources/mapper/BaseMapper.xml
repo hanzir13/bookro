@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.bookrecommendonline.mapper.BaseMapper">
+<!-- 	基础公共mapper配置文件，可被其他具体mapper配置文件引用 -->
+<!--   查询参数集合，通过遍历list参数集合（条件字段/属性名，查询条件，参数值）来拼接sql语句 -->
+  <sql id="Base_Param_List">
+	    <if test="list!=null and list.size()>0">
+	    	<foreach collection="list" item="param" index="index" open="" separator="" close="">
+	    		<choose>
+    				<when test="param[0] == 'or'.toString()">
+    					and 
+	    				<foreach collection="param[1]" item="paramOr" index="indexOr" open="(" separator="or" close=")">
+	    					<if test="param[2][index] == '='.toString()">
+				            	<if test="param[3][index]!=null and param[3][index]!=''.toString()">
+				            		${paramOr} = #{param.[3].[${indexOr}]} 
+				            	</if>
+				            </if>
+				            <if test="param[2][index] == 'like'.toString()">
+				            	<if test="param[3][index]!=null and param[3][index]!=''.toString()">
+				            		${paramOr} like concat('%',#{param.[3].[${indexOr}]},'%')
+				            	</if>
+				            </if>
+	    				</foreach>
+			   		</when>
+			   		<otherwise>
+			   			<if test="param[1] == '='.toString()">
+			            	<if test="param[2]!=null and param[2]!=''.toString()">
+			            		and ${param[0]} = #{param.[2]} 
+			            	</if>
+			            </if>
+			            <if test="param[1] == 'like'.toString()">
+			            	<if test="param[2] !=null and param[2] != ''.toString()">
+			            		and ${param[0]} like concat('%',#{param.[2]},'%')
+			            	</if>
+			            </if>
+			            <if test="param[1] == 'in'.toString()">
+			            	<if test="param[2]!=null and param[2]!=''.toString()">
+			            		and ${param[0]} in (${param[2]})  
+			            	</if>
+			            </if>
+			            <if test="param[1] == '!='.toString()">
+			            	<if test="param[2]!=null and param[2]!=''.toString()">
+			            		and ${param[0]} &lt;&gt; #{param.[2]} 
+			            	</if>
+			            </if>
+			   		</otherwise>
+			   	</choose>
+	       </foreach>
+	    </if> 
+  </sql>
+</mapper>

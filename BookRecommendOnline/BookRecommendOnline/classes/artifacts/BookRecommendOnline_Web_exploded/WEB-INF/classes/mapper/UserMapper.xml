@@ -1,0 +1,193 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.bookrecommendonline.mapper.UserMapper">
+  <resultMap id="BaseResultMap" type="com.bookrecommendonline.entity.UserEntity">
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="username" jdbcType="VARCHAR" property="username" />
+    <result column="password" jdbcType="VARCHAR" property="password" />
+    <result column="header" jdbcType="VARCHAR" property="header" />
+    <result column="gender" jdbcType="INTEGER" property="gender" />
+    <result column="age" jdbcType="INTEGER" property="age" />
+    <result column="phone" jdbcType="VARCHAR" property="phone" />
+    <result column="email" jdbcType="VARCHAR" property="email" />
+    <result column="lastlogintime" jdbcType="VARCHAR" property="lastlogintime" />
+    <result column="state" jdbcType="INTEGER" property="state" />
+    <result column="createtime" jdbcType="VARCHAR" property="createtime" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    id, username, password, header, gender, age, phone, email, lastlogintime, state, 
+    createtime
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from db_user
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from db_user
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.bookrecommendonline.entity.UserEntity">
+    insert into db_user (id, username, password, 
+      header, gender, age, 
+      phone, email, lastlogintime, 
+      state, createtime)
+    values (#{id,jdbcType=INTEGER}, #{username,jdbcType=VARCHAR}, #{password,jdbcType=VARCHAR}, 
+      #{header,jdbcType=VARCHAR}, #{gender,jdbcType=INTEGER}, #{age,jdbcType=INTEGER}, 
+      #{phone,jdbcType=VARCHAR}, #{email,jdbcType=VARCHAR}, #{lastlogintime,jdbcType=VARCHAR}, 
+      #{state,jdbcType=INTEGER}, #{createtime,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.bookrecommendonline.entity.UserEntity">
+    insert into db_user
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="username != null">
+        username,
+      </if>
+      <if test="password != null">
+        password,
+      </if>
+      <if test="header != null">
+        header,
+      </if>
+      <if test="gender != null">
+        gender,
+      </if>
+      <if test="age != null">
+        age,
+      </if>
+      <if test="phone != null">
+        phone,
+      </if>
+      <if test="email != null">
+        email,
+      </if>
+      <if test="lastlogintime != null">
+        lastlogintime,
+      </if>
+      <if test="state != null">
+        state,
+      </if>
+      <if test="createtime != null">
+        createtime,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="username != null">
+        #{username,jdbcType=VARCHAR},
+      </if>
+      <if test="password != null">
+        #{password,jdbcType=VARCHAR},
+      </if>
+      <if test="header != null">
+        #{header,jdbcType=VARCHAR},
+      </if>
+      <if test="gender != null">
+        #{gender,jdbcType=INTEGER},
+      </if>
+      <if test="age != null">
+        #{age,jdbcType=INTEGER},
+      </if>
+      <if test="phone != null">
+        #{phone,jdbcType=VARCHAR},
+      </if>
+      <if test="email != null">
+        #{email,jdbcType=VARCHAR},
+      </if>
+      <if test="lastlogintime != null">
+        #{lastlogintime,jdbcType=VARCHAR},
+      </if>
+      <if test="state != null">
+        #{state,jdbcType=INTEGER},
+      </if>
+      <if test="createtime != null">
+        #{createtime,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.bookrecommendonline.entity.UserEntity">
+    update db_user
+    <set>
+      <if test="username != null">
+        username = #{username,jdbcType=VARCHAR},
+      </if>
+      <if test="password != null">
+        password = #{password,jdbcType=VARCHAR},
+      </if>
+      <if test="header != null">
+        header = #{header,jdbcType=VARCHAR},
+      </if>
+      <if test="gender != null">
+        gender = #{gender,jdbcType=INTEGER},
+      </if>
+      <if test="age != null">
+        age = #{age,jdbcType=INTEGER},
+      </if>
+      <if test="phone != null">
+        phone = #{phone,jdbcType=VARCHAR},
+      </if>
+      <if test="email != null">
+        email = #{email,jdbcType=VARCHAR},
+      </if>
+      <if test="lastlogintime != null">
+        lastlogintime = #{lastlogintime,jdbcType=VARCHAR},
+      </if>
+      <if test="state != null">
+        state = #{state,jdbcType=INTEGER},
+      </if>
+      <if test="createtime != null">
+        createtime = #{createtime,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.bookrecommendonline.entity.UserEntity">
+    update db_user
+    set username = #{username,jdbcType=VARCHAR},
+      password = #{password,jdbcType=VARCHAR},
+      header = #{header,jdbcType=VARCHAR},
+      gender = #{gender,jdbcType=INTEGER},
+      age = #{age,jdbcType=INTEGER},
+      phone = #{phone,jdbcType=VARCHAR},
+      email = #{email,jdbcType=VARCHAR},
+      lastlogintime = #{lastlogintime,jdbcType=VARCHAR},
+      state = #{state,jdbcType=INTEGER},
+      createtime = #{createtime,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  
+  <!--   带参数查询 -->
+  <select id="find" resultMap="BaseResultMap" >
+    select 
+    	<include refid="Base_Column_List" />
+    from db_user
+    where 1=1 
+	    <include refid="com.bookrecommendonline.mapper.BaseMapper.Base_Param_List" />
+    order by id desc
+  </select>
+  
+  <!--   带参数查询一个 -->
+  <select id="findFirst" resultMap="BaseResultMap" >
+    select 
+    	<include refid="Base_Column_List" />
+    from db_user
+    where 1=1 
+    	<include refid="com.bookrecommendonline.mapper.BaseMapper.Base_Param_List" />
+    order by id desc 
+    limit 0,1
+  </select>
+  
+  <!--   带参数聚合查询 -->
+  <select id="findCount" resultType="java.lang.Long">
+    select count(id) from db_user
+    where 1=1 
+    	<include refid="com.bookrecommendonline.mapper.BaseMapper.Base_Param_List" />
+  </select>
+  
+</mapper>

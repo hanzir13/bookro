@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="WebContextManager">
+    <option name="state">
+      <map>
+        <entry key="file://$PROJECT_DIR$/WebContent/WEB-INF/pages/admin/admin/list.jsp" value="file://$PROJECT_DIR$/WebContent/WEB-INF/pages/admin/admin" />
+        <entry key="file://$PROJECT_DIR$/WebContent/WEB-INF/pages/admin/admin/updatePassword.jsp" value="file://$PROJECT_DIR$/WebContent/WEB-INF/pages/admin/admin" />
+        <entry key="file://$PROJECT_DIR$/WebContent/WEB-INF/pages/admin/book/list.jsp" value="file://$PROJECT_DIR$/WebContent/WEB-INF/pages/admin/book" />
+        <entry key="file://$PROJECT_DIR$/WebContent/WEB-INF/pages/admin/book/update.jsp" value="file://$PROJECT_DIR$/WebContent/WEB-INF/pages/admin/book" />
+        <entry key="file://$PROJECT_DIR$/WebContent/WEB-INF/pages/admin/bookcollect/list.jsp" value="file://$PROJECT_DIR$/WebContent/WEB-INF/pages/admin/bookcollect" />
+        <entry key="file://$PROJECT_DIR$/WebContent/WEB-INF/pages/admin/bookcomment/detail.jsp" value="file://$PROJECT_DIR$/WebContent/WEB-INF/pages/admin/bookcomment" />
+        <entry key="file://$PROJECT_DIR$/WebContent/WEB-INF/pages/admin/booklook/list.jsp" value="file://$PROJECT_DIR$/WebContent/WEB-INF/pages/admin/booklook" />
+        <entry key="file://$PROJECT_DIR$/WebContent/WEB-INF/pages/admin/bookscore/list.jsp" value="file://$PROJECT_DIR$/WebContent/WEB-INF/pages/admin/bookscore" />
+        <entry key="file://$PROJECT_DIR$/WebContent/WEB-INF/pages/admin/booktype/list.jsp" value="file://$PROJECT_DIR$/WebContent/WEB-INF/pages/admin/booktype" />
+        <entry key="file://$PROJECT_DIR$/WebContent/WEB-INF/pages/admin/user/list.jsp" value="file://$PROJECT_DIR$/WebContent/WEB-INF/pages/admin/user" />
+        <entry key="file://$PROJECT_DIR$/WebContent/WEB-INF/pages/admin/user/update.jsp" value="file://$PROJECT_DIR$/WebContent/WEB-INF/pages/admin/user" />
+        <entry key="file://$PROJECT_DIR$/WebContent/WEB-INF/pages/admin/userlabel/list.jsp" value="file://$PROJECT_DIR$/WebContent/WEB-INF/pages/admin/userlabel" />
+        <entry key="file://$PROJECT_DIR$/WebContent/WEB-INF/pages/user/bookscore/list.jsp" value="file://$PROJECT_DIR$/WebContent/WEB-INF/pages/user/bookscore" />
+        <entry key="file://$PROJECT_DIR$/WebContent/WEB-INF/pages/user/user/update.jsp" value="file://$PROJECT_DIR$/WebContent/WEB-INF/pages/user/user" />
+      </map>
+    </option>
+  </component>
+</project>

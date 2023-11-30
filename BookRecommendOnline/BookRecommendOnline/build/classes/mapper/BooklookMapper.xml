@@ -1,0 +1,181 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.bookrecommendonline.mapper.BooklookMapper">
+  <resultMap id="BaseResultMap" type="com.bookrecommendonline.entity.BooklookEntity">
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="userid" jdbcType="INTEGER" property="userid" />
+    <result column="bookid" jdbcType="INTEGER" property="bookid" />
+    <result column="createtime" jdbcType="VARCHAR" property="createtime" />
+  </resultMap>
+  
+  <!--   关联结果集合 -->
+  <resultMap extends="BaseResultMap" id="BaseResultMapJoin" type="com.bookrecommendonline.entity.BooklookEntity">
+<!--     关联用户 -->
+    <association property="userEntity" javaType="com.bookrecommendonline.entity.UserEntity">
+		<id column="u_id" jdbcType="INTEGER" property="id" />
+	    <result column="u_username" jdbcType="VARCHAR" property="username" />
+	    <result column="u_password" jdbcType="VARCHAR" property="password" />
+	    <result column="u_header" jdbcType="VARCHAR" property="header" />
+	    <result column="u_gender" jdbcType="INTEGER" property="gender" />
+	    <result column="u_age" jdbcType="INTEGER" property="age" />
+	    <result column="u_phone" jdbcType="VARCHAR" property="phone" />
+	    <result column="u_email" jdbcType="VARCHAR" property="email" />
+	    <result column="u_lastlogintime" jdbcType="VARCHAR" property="lastlogintime" />
+	    <result column="u_state" jdbcType="INTEGER" property="state" />
+	    <result column="u_createtime" jdbcType="VARCHAR" property="createtime" />
+	</association>
+<!-- 	关联图书 -->
+	<association property="bookEntity" javaType="com.bookrecommendonline.entity.BookEntity">
+		<id column="m_id" jdbcType="INTEGER" property="id" />
+	    <result column="m_bookname" jdbcType="VARCHAR" property="bookname" />
+	    <result column="m_booktypeid" jdbcType="INTEGER" property="booktypeid" />
+	    <result column="m_image" jdbcType="VARCHAR" property="image" />
+	    <result column="m_author" jdbcType="VARCHAR" property="author" />
+    	<result column="m_press" jdbcType="VARCHAR" property="press" />
+    	<result column="m_price" jdbcType="VARCHAR" property="price" />
+    	<result column="m_isbn" jdbcType="VARCHAR" property="isbn" />
+	    <result column="m_doubanid" jdbcType="VARCHAR" property="doubanid" />
+	    <result column="m_createtime" jdbcType="VARCHAR" property="createtime" />
+	</association>
+  </resultMap>
+  
+<!--   关联查询结果 -->
+  <sql id="Base_Column_List_Join">
+    l.*,
+   	u.id as u_id, u.username as u_username, u.password as u_password, 
+   	u.header as u_header, u.gender as u_gender, u.age as u_age, u.phone as u_phone, 
+   	u.email as u_email, u.lastlogintime as u_lastlogintime, u.state as u_state, 
+    u.createtime as u_createtime, 
+    m.id as m_id, m.bookname as m_bookname, m.booktypeid as m_booktypeid, 
+    m.image as m_image, 
+	m.author as m_author, m.press as m_press, m.price as m_price, m.isbn as m_isbn,
+	m.doubanid as m_doubanid, m.createtime as m_createtime 
+  </sql>
+  
+  <sql id="Base_Column_List">
+    id, userid, bookid, createtime
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from db_booklook
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from db_booklook
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.bookrecommendonline.entity.BooklookEntity">
+    insert into db_booklook (id, userid, bookid, 
+      createtime)
+    values (#{id,jdbcType=INTEGER}, #{userid,jdbcType=INTEGER}, #{bookid,jdbcType=INTEGER}, 
+      #{createtime,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.bookrecommendonline.entity.BooklookEntity">
+    insert into db_booklook
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="userid != null">
+        userid,
+      </if>
+      <if test="bookid != null">
+        bookid,
+      </if>
+      <if test="createtime != null">
+        createtime,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="userid != null">
+        #{userid,jdbcType=INTEGER},
+      </if>
+      <if test="bookid != null">
+        #{bookid,jdbcType=INTEGER},
+      </if>
+      <if test="createtime != null">
+        #{createtime,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.bookrecommendonline.entity.BooklookEntity">
+    update db_booklook
+    <set>
+      <if test="userid != null">
+        userid = #{userid,jdbcType=INTEGER},
+      </if>
+      <if test="bookid != null">
+        bookid = #{bookid,jdbcType=INTEGER},
+      </if>
+      <if test="createtime != null">
+        createtime = #{createtime,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.bookrecommendonline.entity.BooklookEntity">
+    update db_booklook
+    set userid = #{userid,jdbcType=INTEGER},
+      bookid = #{bookid,jdbcType=INTEGER},
+      createtime = #{createtime,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  
+  <!--   带参数查询 -->
+  <select id="find" resultMap="BaseResultMap" >
+    select 
+    	<include refid="Base_Column_List" />
+    from db_booklook
+    where 1=1 
+	    <include refid="com.bookrecommendonline.mapper.BaseMapper.Base_Param_List" />
+    order by id desc
+  </select>
+  
+<!--   带参数关联查询 -->
+  <select id="findJoin" resultMap="BaseResultMapJoin" >
+    select 
+    	<include refid="Base_Column_List_Join" /> 
+    from db_booklook l
+    left join db_user u on u.id = l.userid  
+    left join db_book m on m.id = l.bookid 
+    where 1=1 
+    	<include refid="com.bookrecommendonline.mapper.BaseMapper.Base_Param_List" />
+    order by l.id desc
+  </select>
+  
+<!--   带参数查询一个 -->
+  <select id="findFirst" resultMap="BaseResultMap" >
+    select 
+    	<include refid="Base_Column_List" />
+    from db_booklook
+    where 1=1 
+    	<include refid="com.bookrecommendonline.mapper.BaseMapper.Base_Param_List" />
+    order by id desc 
+    limit 0,1
+  </select>
+  
+  <!--   带参数关联查询一个 -->
+  <select id="findFirstJoin" resultMap="BaseResultMapJoin" >
+    select 
+    	<include refid="Base_Column_List_Join" /> 
+    from db_booklook l
+    left join db_user u on u.id = l.userid  
+    left join db_book m on m.id = l.bookid 
+    where 1=1 
+    	<include refid="com.bookrecommendonline.mapper.BaseMapper.Base_Param_List" /> 
+    order by l.id desc 
+    limit 0,1
+  </select>
+  
+  <!--   带参数聚合查询 -->
+  <select id="findCount" resultType="java.lang.Long">
+    select count(id) from db_booklook
+    where 1=1 
+    	<include refid="com.bookrecommendonline.mapper.BaseMapper.Base_Param_List" />
+  </select>
+  
+</mapper>
